@@ -7,7 +7,7 @@ const Task = ({
   onEdit,
   onToggleEditing,
 }) => {
-  const [description, setDescription] = useState(task.description);
+  const [description, setDescription] = useState(task.title);
 
   const toggleHandler = () => {
     onToggleComplete(task.id);
@@ -38,7 +38,7 @@ const Task = ({
           checked={task.completed}
         />
         <label>
-          <span className="description">{task.description}</span>
+          <span className="description">{task.title}</span>
           <span className="created">{task.created}</span>
         </label>
         <button className="icon icon-edit" onClick={toggleEditing}></button>

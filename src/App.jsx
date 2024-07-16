@@ -1,32 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 import TaskList from "./components/TaskList";
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      description: "Completed task",
-      completed: true,
-      editing: false,
-      created: "created 17 seconds ago",
-    },
-    {
-      id: 2,
-      description: "Editing task",
-      completed: false,
-      editing: true,
-      created: "created 5 minutes ago",
-    },
-    {
-      id: 3,
-      description: "Active task",
-      completed: false,
-      editing: false,
-      created: "created 5 minutes ago",
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://jsonplaceholder.typicode.com/todos?userId=1"
+        );
+        const result = await response.json();
+        const modifiedData = result.map((item) => ({
+          ...item,
+          editing: false,
+          created: "created 5 minutes ago",
+        }));
+        setTasks(modifiedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const toggleComplete = (id) => {
     setTasks(
@@ -58,14 +57,31 @@ function App() {
     );
   };
 
+  const addTask = (val) => {
+    const newTask = {
+      id: tasks.length + 1,
+      title: val,
+      completed: false,
+      editing: false,
+      created: "created just now",
+    };
+    setTasks([...tasks, newTask]);
+  };
+
+  const deleteComplete = () => {
+    setTasks(tasks.filter((task) => !task.completed));
+  };
+
   return (
     <>
       <TaskList
         tasks={tasks}
+        onAdd={addTask}
         onToggleComplete={toggleComplete}
         onDelete={deleteTask}
         onEdit={editTask}
         onToggleEditing={toggleEditing}
+        onDeleteComplete={deleteComplete}
       />
     </>
   );
