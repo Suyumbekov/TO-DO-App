@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+
+import PropTypes from "prop-types";
 
 const Task = ({
   task,
@@ -39,7 +42,9 @@ const Task = ({
         />
         <label>
           <span className="description">{task.title}</span>
-          <span className="created">{task.created}</span>
+          <span className="created">
+            {formatDistanceToNow(task.created, { includeSeconds: true })}
+          </span>
         </label>
         <button className="icon icon-edit" onClick={toggleEditing}></button>
         <button className="icon icon-destroy" onClick={handleDelete}></button>
@@ -55,6 +60,14 @@ const Task = ({
       )}
     </li>
   );
+};
+
+Task.propTypes = {
+  task: PropTypes.object,
+  onToggleComplete: PropTypes.func,
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
+  onToggleEditing: PropTypes.func,
 };
 
 export default Task;

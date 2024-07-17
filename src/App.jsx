@@ -16,7 +16,7 @@ function App() {
         const modifiedData = result.map((item) => ({
           ...item,
           editing: false,
-          created: "created 5 minutes ago",
+          created: Date.now(),
         }));
         setTasks(modifiedData);
       } catch (error) {
@@ -50,9 +50,7 @@ function App() {
   const editTask = (id, val) => {
     setTasks(
       tasks.map((task) =>
-        task.id == id
-          ? { ...task, description: val, editing: !task.editing }
-          : task
+        task.id == id ? { ...task, title: val, editing: !task.editing } : task
       )
     );
   };
@@ -63,7 +61,7 @@ function App() {
       title: val,
       completed: false,
       editing: false,
-      created: "created just now",
+      created: Date.now(),
     };
     setTasks([...tasks, newTask]);
   };

@@ -2,6 +2,7 @@ import NewTaskForm from "./NewTaskForm";
 import Task from "./Task";
 import Footer from "./Footer";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
 const TaskList = ({
   tasks,
@@ -61,6 +62,35 @@ const TaskList = ({
       </section>
     </section>
   );
+};
+
+TaskList.propTypes = {
+  tasks: PropTypes.arrayOf(PropTypes.object),
+  onAdd: PropTypes.func,
+  onToggleComplete: PropTypes.func,
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
+  onToggleEditing: PropTypes.func,
+  onDeleteComplete: PropTypes.func,
+};
+
+TaskList.defaultProps = {
+  tasks: [
+    {
+      id: 1,
+      title: "Active task",
+      completed: false,
+      editing: false,
+      created: Date.now(),
+    },
+    {
+      id: 2,
+      title: "Completed task",
+      completed: true,
+      editing: false,
+      created: Date.now(),
+    },
+  ],
 };
 
 export default TaskList;

@@ -1,4 +1,6 @@
-const TaskFIlter = ({ filter, onChangeFilter }) => {
+import PropTypes from "prop-types";
+
+const TaskFilter = ({ filter, onChangeFilter }) => {
   return (
     <ul className="filters">
       <li>
@@ -29,4 +31,9 @@ const TaskFIlter = ({ filter, onChangeFilter }) => {
   );
 };
 
-export default TaskFIlter;
+TaskFilter.propTypes = {
+  filter: PropTypes.oneOf(["all", "active", "completed"]),
+  onChangeFilter: PropTypes.func,
+};
+
+export default TaskFilter;
